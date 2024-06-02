@@ -1,1 +1,23 @@
-port: 8010
+port: 8700
+
+database:
+  server: localhost
+  name: tfilocaldb
+  username: agung
+  password: rahasia
+
+cookie: 
+  secure: true
+  lifetime: 24
+
+template:
+  cached: false
+  dir: "data/templates/pdtdefault"
+  
+
+application:
+  pagedir: "data/pages"
+  contentdir: "data/content"
+
+logging:
+  enabled: true
