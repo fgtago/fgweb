@@ -1,5 +1,6 @@
 package appsmodel
 
 type Webservice struct {
-	RootDir string
+	RootDir       string
+	Configuration *Configuration
 }

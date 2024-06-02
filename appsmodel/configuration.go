@@ -24,4 +24,5 @@ type Configuration struct {
 	Logging struct {
 		Enabled bool `yaml:"enabled"`
 	} `yaml:"logging"`
+	ConfigPath string
 }

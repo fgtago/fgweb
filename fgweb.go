@@ -1,24 +1,33 @@
 package fgweb
 
 import (
+	"github.com/agungdhewe/dwlog"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/config"
+	"github.com/fgtago/fgweb/msg"
 )
 
 var ws *appsmodel.Webservice
 
-func New(rootDir string, cfgpath string) (err error) {
-	ws = &appsmodel.Webservice{}
-	ws.RootDir = rootDir
+func New(rootDir string, cfgpath string) (ws *appsmodel.Webservice, err error) {
 
 	// baca configurasi file
 	config.New(ws)
-	config.ReadFromYml(cfgpath)
+	cfg, err := config.ReadFromYml(cfgpath)
+	if err != nil {
+		dwlog.Error(msg.ErrReadYml, cfgpath)
+		return nil, err
+	}
 
-	return nil
+	ws = &appsmodel.Webservice{}
+	ws.RootDir = rootDir
+	ws.Configuration = cfg
+
+	return ws, nil
 }
 
-func StartService() (err error) {
+func StartService(port int) (err error) {
+	dwlog.Info(msg.InfStartingService, port)
 
 	return nil
 }

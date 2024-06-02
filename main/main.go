@@ -7,7 +7,10 @@ import (
 	"runtime"
 
 	"github.com/fgtago/fgweb"
+	"github.com/fgtago/fgweb/appsmodel"
 )
+
+var ws *appsmodel.Webservice
 
 func main() {
 	var err error
@@ -31,14 +34,18 @@ func main() {
 	}
 
 	// start jalankan web
-	err = fgweb.New(rootDir, cfgpath)
+	ws, err = fgweb.New(rootDir, cfgpath)
 	if err != nil {
+		// ada error saat inisiasi webservice, halt
 		panic(err.Error())
 	}
 
-	fmt.Println("Staring Service...")
-	err = fgweb.StartService()
+	// info: memulai service
+	fmt.Println("Starting Service ...")
+	port := ws.Configuration.Port
+	err = fgweb.StartService(port)
 	if err != nil {
+		// ada error saat service start, halt
 		panic(err.Error())
 	}
 
