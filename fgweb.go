@@ -1,15 +1,19 @@
 package fgweb
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
 	"github.com/agungdhewe/dwlog"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/config"
+	"github.com/fgtago/fgweb/midware"
 	"github.com/fgtago/fgweb/msg"
 	"github.com/go-chi/chi/v5"
 )
+
+type RouteHandlerFunc func(mux *chi.Mux) error
 
 var ws *appsmodel.Webservice
 
@@ -27,17 +31,25 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	ws.RootDir = rootDir
 	ws.Configuration = cfg
 
+	ctx := context.Background()
+	context.WithValue(ctx, appsmodel.WebserviceKeyName, "satu")
+
 	return ws, nil
 }
 
-func StartService(port int) (err error) {
+func StartService(port int, hnd RouteHandlerFunc) (err error) {
 	dwlog.Info(msg.InfStartingService, port)
 
+	// buat router
+	ws.Mux = httpRequestHandler(hnd)
+
+	// siapkan server
 	srv := http.Server{
 		Addr:    fmt.Sprintf(":%d", port),
-		Handler: httpHandler(),
+		Handler: ws.Mux,
 	}
 
+	// jalankan server
 	err = srv.ListenAndServe()
 	if err != nil {
 		dwlog.Error(msg.ErrStartService)
@@ -47,6 +59,20 @@ func StartService(port int) (err error) {
 	return nil
 }
 
-func httpHandler() (mux *chi.Mux) {
+func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
+	mux := chi.NewRouter()
+
+	// middleware
+	mux.Use(midware.MobileDetect)
+
+	// handle dari main program
+	hnd(mux)
+
 	return mux
+}
+
+func Get(mux *chi.Mux, pattern string, fn http.HandlerFunc) {
+	mux.Get(pattern, func(w http.ResponseWriter, r *http.Request) {
+		fn(w, r)
+	})
 }

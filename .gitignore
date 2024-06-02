@@ -22,6 +22,7 @@ go.work
 go.work.sum
 
 # Current Project
+vendor
 run.sh
 main/config-*
 !main/config-dev.yml

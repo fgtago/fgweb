@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go run ./main -dev
+go run ./main -conf="config-dev.yml"
