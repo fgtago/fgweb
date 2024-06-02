@@ -23,15 +23,15 @@ func main() {
 	rootDir := filepath.Dir(filename)
 
 	// ambil file konfigurasi
-	var cfgFileName string
+	var cfgpath string
 	if isDev {
-		cfgFileName = filepath.Join(rootDir, "config-dev.yml")
+		cfgpath = filepath.Join(rootDir, "config-dev.yml")
 	} else {
-		cfgFileName = filepath.Join(rootDir, "config.yml")
+		cfgpath = filepath.Join(rootDir, "config.yml")
 	}
 
 	// start jalankan web
-	err = fgweb.New(rootDir, cfgFileName)
+	err = fgweb.New(rootDir, cfgpath)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -41,4 +41,5 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
+
 }
