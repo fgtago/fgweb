@@ -21,3 +21,5 @@ application:
 
 logging:
   enabled: true
+
+  
