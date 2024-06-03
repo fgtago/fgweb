@@ -1,7 +1,6 @@
 package fgweb
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 
@@ -30,9 +29,6 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	ws = &appsmodel.Webservice{}
 	ws.RootDir = rootDir
 	ws.Configuration = cfg
-
-	ctx := context.Background()
-	context.WithValue(ctx, appsmodel.WebserviceKeyName, "satu")
 
 	return ws, nil
 }
