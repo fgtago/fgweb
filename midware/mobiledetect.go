@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/agungdhewe/dwtpl"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/houseme/mobiledetect"
 )
@@ -15,11 +16,11 @@ func MobileDetect(next http.Handler) http.Handler {
 		// detek device yang dipakai user saat ini
 		currentDevice := mobiledetect.New(r, nil)
 		if currentDevice.IsTablet() {
-			device.Type = "tablet"
+			device.Type = dwtpl.DeviceTablet
 		} else if currentDevice.IsMobile() {
-			device.Type = "mobile"
+			device.Type = dwtpl.DeviceMobile
 		} else {
-			device.Type = "desktop"
+			device.Type = dwtpl.DeviceDesktop
 		}
 
 		ctx := context.WithValue(r.Context(), appsmodel.DeviceKeyName, device)
