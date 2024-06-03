@@ -16,5 +16,5 @@ func Router(mux *chi.Mux) error {
 }
 
 func pagehandlerHome(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "home page nya")
+	fmt.Fprintln(w, "home page nya ok")
 }
