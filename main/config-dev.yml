@@ -12,12 +12,11 @@ cookie:
 
 template:
   cached: false
-  dir: "data/templates/pdtdefault"
-  
+  dir: "../data/templates/v2"  
 
 application:
-  pagedir: "data/pages"
-  contentdir: "data/content"
+  pagedir: "../data/pages"
+  contentdir: "../data/content"
 
 logging:
   enabled: true
