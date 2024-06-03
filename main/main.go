@@ -7,11 +7,9 @@ import (
 	"runtime"
 
 	"github.com/fgtago/fgweb"
-	"github.com/fgtago/fgweb/appsmodel"
+	"github.com/fgtago/fgweb/main/apps"
 	"github.com/go-chi/chi/v5"
 )
-
-var ws *appsmodel.Webservice
 
 func main() {
 	var err error
@@ -32,20 +30,20 @@ func main() {
 	cfgpath := filepath.Join(rootDir, cfgFileName)
 
 	// start jalankan web
-	ws, err = fgweb.New(rootDir, cfgpath)
+	ws, err := fgweb.New(rootDir, cfgpath)
 	if err != nil {
 		// ada error saat inisiasi webservice, halt
 		panic(err.Error())
 	}
 
-	// router
-	router := func(mux *chi.Mux) error {
-		return Router(mux)
-	}
+	// mulai applikasi baru
+	apps.New(ws)
 
 	// info: memulai service
 	port := ws.Configuration.Port
-	err = fgweb.StartService(port, router)
+	err = fgweb.StartService(port, func(mux *chi.Mux) error {
+		return Router(mux)
+	})
 	if err != nil {
 		// ada error saat service start, halt
 		panic(err.Error())

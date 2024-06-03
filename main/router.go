@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/fgtago/fgweb"
+	"github.com/fgtago/fgweb/main/apps"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -16,5 +17,9 @@ func Router(mux *chi.Mux) error {
 }
 
 func pagehandlerHome(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "home page nya ok")
+	app := apps.GetApplication()
+
+	app.Webservice.TplMgr.Ready()
+
+	fmt.Fprintln(w, "home page nya ok", app.Webservice.Configuration.Port)
 }
