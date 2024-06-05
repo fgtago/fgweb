@@ -1,0 +1,8 @@
+device:
+  mobile:
+    - layout.html
+  tablet:
+    - layout.html
+  desktop:
+    - layout.html
+        
