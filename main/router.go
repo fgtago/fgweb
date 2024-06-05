@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 
@@ -23,7 +24,7 @@ func pagehandlerHome(w http.ResponseWriter, r *http.Request) {
 	device := ctx.Value(appsmodel.DeviceKeyName).(appsmodel.Device)
 
 	// TODO: implmentasikan tpl
-	tpl, exists, err := app.Webservice.TplMgr.GetPage("homes", device.Type)
+	tpl, exists, err := app.Webservice.TplMgr.GetPage("home", device.Type)
 	if err != nil {
 		// error 500
 		fmt.Println(err.Error())
@@ -34,5 +35,20 @@ func pagehandlerHome(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("404")
 	}
 
-	fmt.Fprintln(w, "home page nya ok", app.Webservice.Configuration.Port)
+	// render page
+	buff := new(bytes.Buffer)
+	err = tpl.Execute(buff, nil)
+	if err != nil {
+		fmt.Fprintf(w, "error: %s", err.Error())
+		return
+	}
+
+	// send bufer to browser
+	_, err = buff.WriteTo(w)
+	if err != nil {
+		fmt.Fprintf(w, "error: %s", err.Error())
+		return
+	}
+
+	//fmt.Fprintln(w, "home page nya ok", app.Webservice.Configuration.Port)
 }
