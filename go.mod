@@ -11,4 +11,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 )
 
-require github.com/agungdhewe/dwpath v1.1.2 // indirect
+require github.com/agungdhewe/dwpath v1.1.2
