@@ -1,5 +1,7 @@
 port: 8700
 
+favicon: "favicon.ico"
+
 database:
   server: localhost
   name: tfilocaldb
