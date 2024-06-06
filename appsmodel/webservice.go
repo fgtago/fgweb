@@ -10,4 +10,5 @@ type Webservice struct {
 	Configuration *Configuration
 	Mux           *chi.Mux
 	TplMgr        *dwtpl.TemplateManager
+	AllowedAsset  map[string]*[]string
 }

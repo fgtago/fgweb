@@ -8,6 +8,7 @@ import (
 
 	"github.com/fgtago/fgweb"
 	"github.com/fgtago/fgweb/appsmodel"
+	"github.com/fgtago/fgweb/handlers"
 	"github.com/fgtago/fgweb/main/apps"
 	"github.com/go-chi/chi/v5"
 )
@@ -15,6 +16,8 @@ import (
 func Router(mux *chi.Mux) error {
 
 	fgweb.Get(mux, "/favicon.ico", favicon)
+	fgweb.Get(mux, "/asset/*", handlers.AssetHandler)
+	fgweb.Get(mux, "/template/*", handlers.TemplateHandler)
 	fgweb.Get(mux, "/", pagehandlerHome)
 
 	return nil
