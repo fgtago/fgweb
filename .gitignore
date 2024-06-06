@@ -26,4 +26,5 @@ vendor
 run.sh
 main/config-*
 !main/config-dev.yml
+datalocal
 
