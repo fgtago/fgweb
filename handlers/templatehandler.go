@@ -30,15 +30,23 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var exist bool
 	var path string
+
+	// apakah ada asset yang dibuat untuk mobile/tablet ?
 	if device.Type == dwtpl.DeviceMobile || device.Type == dwtpl.DeviceTablet {
-		// path = fmt.Sprintf("%s~%s", device.Type, filename)
-		path := filepath.Join(ws.RootDir, "..", pathparam)
+		dir := filepath.Dir(pathparam)
+		filename = fmt.Sprintf("%s~%s", device.Type, filename)
+		path = filepath.Join(ws.RootDir, ws.Configuration.Template.Dir, dir, filename)
+		exist, _, _ = dwpath.IsFileExists(path)
+		if exist {
+			pathparam = filepath.Join(dir, filename)
+		}
 	}
 
 	// cek apakah asset ada
-	path := filepath.Join(ws.RootDir, "..", pathparam)
-	exist, _, _ := dwpath.IsFileExists(pathparam)
+	path = filepath.Join(ws.RootDir, ws.Configuration.Template.Dir, pathparam)
+	exist, _, _ = dwpath.IsFileExists(path)
 	if !exist {
 		fmt.Fprintf(w, "Asset %s tidak ditemukan", pathparam)
 		return
@@ -55,10 +63,5 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 	defer filedatasource.Close()
 
 	http.ServeFile(w, r, path)
-
-	// var path string
-	// if device.Type == dwtpl.DeviceMobile || device.Type == dwtpl.DeviceTablet {
-	// 	path = fmt.Sprintf("%s~%s", device.Type, filename)
-	// }
 
 }

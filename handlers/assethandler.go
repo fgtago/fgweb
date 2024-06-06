@@ -32,7 +32,7 @@ func serveAsset(pathparam string, w http.ResponseWriter, r *http.Request) {
 
 	// cek apakah asset ada
 	path := filepath.Join(ws.RootDir, "..", pathparam)
-	exist, _, _ := dwpath.IsFileExists(pathparam)
+	exist, _, _ := dwpath.IsFileExists(path)
 	if !exist {
 		fmt.Fprintf(w, "Asset %s tidak ditemukan", pathparam)
 		return
