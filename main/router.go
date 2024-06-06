@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"net/http"
+	"path/filepath"
 
 	"github.com/fgtago/fgweb"
 	"github.com/fgtago/fgweb/appsmodel"
@@ -13,9 +14,17 @@ import (
 
 func Router(mux *chi.Mux) error {
 
+	fgweb.Get(mux, "/favicon.ico", favicon)
 	fgweb.Get(mux, "/", pagehandlerHome)
 
 	return nil
+}
+
+func favicon(w http.ResponseWriter, r *http.Request) {
+	app := apps.GetApplication()
+	faviconpath := filepath.Join(app.RootDir, app.Webservice.Configuration.Favicon)
+	fmt.Println(faviconpath)
+	http.ServeFile(w, r, faviconpath)
 }
 
 func pagehandlerHome(w http.ResponseWriter, r *http.Request) {
