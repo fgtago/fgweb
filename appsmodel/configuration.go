@@ -1,7 +1,8 @@
 package appsmodel
 
 type Configuration struct {
-	Port     int `yaml:"port"`
+	Port     int    `yaml:"port"`
+	Favicon  string `yaml:"favicon"`
 	Database struct {
 		Name     string `yaml:"name"`
 		Server   string `yaml:"server"`

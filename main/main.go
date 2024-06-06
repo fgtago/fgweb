@@ -38,6 +38,7 @@ func main() {
 
 	// mulai applikasi baru
 	apps.New(ws)
+	apps.SetRootDir(rootDir)
 
 	// info: memulai service
 	port := ws.Configuration.Port
