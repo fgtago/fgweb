@@ -9,6 +9,7 @@ import (
 	"github.com/agungdhewe/dwtpl"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/config"
+	"github.com/fgtago/fgweb/handlers"
 	"github.com/fgtago/fgweb/midware"
 	"github.com/fgtago/fgweb/msg"
 	"github.com/go-chi/chi/v5"
@@ -19,6 +20,9 @@ type RouteHandlerFunc func(mux *chi.Mux) error
 var ws *appsmodel.Webservice
 
 func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
+	// siapkan core webservice
+	ws = &appsmodel.Webservice{}
+	ws.RootDir = rootDir
 
 	// baca configurasi file
 	config.New(ws)
@@ -27,11 +31,10 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 		dwlog.Error(msg.ErrReadYml, cfgpath)
 		return nil, err
 	}
-
-	// siapkan core webservice
-	ws = &appsmodel.Webservice{}
-	ws.RootDir = rootDir
 	ws.Configuration = cfg
+
+	// siapkan keperluan lain
+	handlers.New(ws)
 
 	err = PrepareTemplate(ws)
 	if err != nil {

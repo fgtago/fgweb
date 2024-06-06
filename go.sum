@@ -2,6 +2,8 @@ github.com/agungdhewe/dwlog v1.2.3 h1:D6BhhH4YexfjPe9ULDoSh4aMSzXdGOVG95mNlRhFBz
 github.com/agungdhewe/dwlog v1.2.3/go.mod h1:MDbg+nx7DjBk8Hod+dVHdxVgFig8WsUo2fovLL6Tj5I=
 github.com/agungdhewe/dwpath v1.1.1 h1:+yXptVyfoV/AwbeHE3PC3lTw8JNxRO5OZ9IZmNqZk7A=
 github.com/agungdhewe/dwpath v1.1.1/go.mod h1:588x6doLfhBTv9iohuenVaHKpVDQtDvzH4Iku9uSDNE=
+github.com/agungdhewe/dwpath v1.1.2 h1:DHddEd4sgKRC6lNavwuySslMPDDw9TLSL0ext6CY9m0=
+github.com/agungdhewe/dwpath v1.1.2/go.mod h1:588x6doLfhBTv9iohuenVaHKpVDQtDvzH4Iku9uSDNE=
 github.com/agungdhewe/dwtpl v0.0.0-20240527183719-797967737082 h1:7PRdKFvyTkNW2Z4KXvTgqLQS3NNHDmrOJVLgSLLDkW0=
 github.com/agungdhewe/dwtpl v0.0.0-20240527183719-797967737082/go.mod h1:8WlFTCNHW4QA7U8Wia2CIKJ2mnFuKXhLIyPt3RF1MO4=
 github.com/go-chi/chi/v5 v5.0.12 h1:9euLV5sTrTNTRUU9POmDUvfxyj6LAABLUcEWO+JJb4s=
