@@ -4,6 +4,8 @@ github.com/agungdhewe/dwpath v1.1.2 h1:DHddEd4sgKRC6lNavwuySslMPDDw9TLSL0ext6CY9
 github.com/agungdhewe/dwpath v1.1.2/go.mod h1:588x6doLfhBTv9iohuenVaHKpVDQtDvzH4Iku9uSDNE=
 github.com/agungdhewe/dwtpl v0.0.0-20240527183719-797967737082 h1:7PRdKFvyTkNW2Z4KXvTgqLQS3NNHDmrOJVLgSLLDkW0=
 github.com/agungdhewe/dwtpl v0.0.0-20240527183719-797967737082/go.mod h1:8WlFTCNHW4QA7U8Wia2CIKJ2mnFuKXhLIyPt3RF1MO4=
+github.com/alexedwards/scs/v2 v2.8.0 h1:h31yUYoycPuL0zt14c0gd+oqxfRwIj6SOjHdKRZxhEw=
+github.com/alexedwards/scs/v2 v2.8.0/go.mod h1:ToaROZxyKukJKT/xLcVQAChi5k6+Pn1Gvmdl7h3RRj8=
 github.com/go-chi/chi/v5 v5.0.12 h1:9euLV5sTrTNTRUU9POmDUvfxyj6LAABLUcEWO+JJb4s=
 github.com/go-chi/chi/v5 v5.0.12/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
 github.com/houseme/mobiledetect v1.2.1 h1:Zb5QZMwiyHMJH2NPsyQjM4YHpZ05AtSoBo46KPBvTdc=

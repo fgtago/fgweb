@@ -18,6 +18,8 @@ func Router(mux *chi.Mux) error {
 	fgweb.Get(mux, "/favicon.ico", favicon)
 	fgweb.Get(mux, "/asset/*", handlers.AssetHandler)
 	fgweb.Get(mux, "/template/*", handlers.TemplateHandler)
+	fgweb.Get(mux, "/login", handlers.PageLoginHandler)
+
 	fgweb.Get(mux, "/", pagehandlerHome)
 
 	return nil

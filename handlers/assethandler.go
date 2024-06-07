@@ -26,6 +26,7 @@ func serveAsset(pathparam string, w http.ResponseWriter, r *http.Request) {
 	// cek apakah asset boleh diakses
 	_, allowed := ws.AllowedAsset[extension]
 	if !allowed {
+		w.WriteHeader(405)
 		fmt.Fprintf(w, "Akses ke asset %s tidak diperbolehkan", filename)
 		return
 	}
@@ -34,6 +35,7 @@ func serveAsset(pathparam string, w http.ResponseWriter, r *http.Request) {
 	path := filepath.Join(ws.RootDir, "..", pathparam)
 	exist, _, _ := dwpath.IsFileExists(path)
 	if !exist {
+		w.WriteHeader(404)
 		fmt.Fprintf(w, "Asset %s tidak ditemukan", pathparam)
 		return
 	}
@@ -43,18 +45,13 @@ func serveAsset(pathparam string, w http.ResponseWriter, r *http.Request) {
 	// contenttype := (*fct)[0]
 	filedatasource, err := os.Open(path)
 	if err != nil {
+		w.WriteHeader(500)
 		fmt.Fprintf(w, "Error memuat asset %s", pathparam)
 		return
 	}
 	defer filedatasource.Close()
 
 	http.ServeFile(w, r, path)
-
-	// w.Header().Add("Content-Type", contenttype)
-	//w.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
-	// w.Header().Add("Content-Length", fmt.Sprintf("%d", filesize))
-	// w.WriteHeader(http.StatusOK)
-	// io.Copy(w, filedatasource)
 
 }
 

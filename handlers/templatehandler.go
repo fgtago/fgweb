@@ -26,6 +26,7 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 	// cek apakah asset boleh diakses
 	_, allowed := ws.AllowedAsset[extension]
 	if !allowed {
+		w.WriteHeader(405)
 		fmt.Fprintf(w, "Akses ke asset %s tidak diperbolehkan", filename)
 		return
 	}
@@ -48,6 +49,7 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 	path = filepath.Join(ws.RootDir, ws.Configuration.Template.Dir, pathparam)
 	exist, _, _ = dwpath.IsFileExists(path)
 	if !exist {
+		w.WriteHeader(404)
 		fmt.Fprintf(w, "Asset %s tidak ditemukan", pathparam)
 		return
 	}
@@ -57,6 +59,7 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 	// contenttype := (*fct)[0]
 	filedatasource, err := os.Open(path)
 	if err != nil {
+		w.WriteHeader(500)
 		fmt.Fprintf(w, "Error memuat asset %s", pathparam)
 		return
 	}
