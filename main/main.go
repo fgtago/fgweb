@@ -50,5 +50,4 @@ func main() {
 		panic(err.Error())
 	}
 
-	//
 }
