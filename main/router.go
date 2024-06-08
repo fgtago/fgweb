@@ -12,6 +12,10 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+type PageData struct {
+	Nama string
+}
+
 func Router(mux *chi.Mux) error {
 
 	fgweb.Get(mux, "/favicon.ico", favicon)
@@ -46,9 +50,15 @@ func pagehandlerHome(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("404")
 	}
 
+	pv := &appsmodel.PageVariable{
+		Data: PageData{
+			Nama: "Agung",
+		},
+	}
+
 	// render page
 	buff := new(bytes.Buffer)
-	err = tpl.Execute(buff, nil)
+	err = tpl.Execute(buff, pv)
 	if err != nil {
 		fmt.Fprintf(w, "error: %s", err.Error())
 		return
