@@ -9,7 +9,6 @@ import (
 	"github.com/fgtago/fgweb"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/handlers"
-	"github.com/fgtago/fgweb/main/apps"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -24,7 +23,7 @@ func Router(mux *chi.Mux) error {
 }
 
 func favicon(w http.ResponseWriter, r *http.Request) {
-	app := apps.GetApplication()
+	app := appsmodel.GetApplication()
 	faviconpath := filepath.Join(app.RootDir, app.Webservice.Configuration.Favicon)
 	fmt.Println(faviconpath)
 	http.ServeFile(w, r, faviconpath)
@@ -32,7 +31,7 @@ func favicon(w http.ResponseWriter, r *http.Request) {
 
 func pagehandlerHome(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	app := apps.GetApplication()
+	app := appsmodel.GetApplication()
 	device := ctx.Value(appsmodel.DeviceKeyName).(appsmodel.Device)
 
 	// TODO: implmentasikan tpl

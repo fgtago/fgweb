@@ -7,7 +7,7 @@ import (
 	"runtime"
 
 	"github.com/fgtago/fgweb"
-	"github.com/fgtago/fgweb/main/apps"
+	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -37,8 +37,8 @@ func main() {
 	}
 
 	// mulai applikasi baru
-	apps.New(ws)
-	apps.SetRootDir(rootDir)
+	appsmodel.New(ws)
+	appsmodel.SetRootDir(rootDir)
 
 	// info: memulai service
 	port := ws.Configuration.Port
