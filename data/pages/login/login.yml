@@ -1,0 +1,10 @@
+title: Login
+
+device:
+  mobile:
+    - login.html
+  tablet:
+    - login.html
+  desktop:
+    - login.html
+        
