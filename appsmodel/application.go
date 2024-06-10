@@ -1,15 +1,13 @@
-package apps
-
-import "github.com/fgtago/fgweb/appsmodel"
+package appsmodel
 
 type Application struct {
-	Webservice *appsmodel.Webservice
+	Webservice *Webservice
 	RootDir    string
 }
 
 var app *Application
 
-func New(w *appsmodel.Webservice) {
+func New(w *Webservice) {
 	app = &Application{}
 	app.Webservice = w
 }
