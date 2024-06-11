@@ -9,7 +9,7 @@ import (
 	"github.com/agungdhewe/dwtpl"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/config"
-	"github.com/fgtago/fgweb/handlers"
+	"github.com/fgtago/fgweb/defaulthandlers"
 	"github.com/fgtago/fgweb/midware"
 	"github.com/fgtago/fgweb/msg"
 	"github.com/go-chi/chi/v5"
@@ -34,7 +34,7 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	ws.Configuration = cfg
 
 	// siapkan keperluan lain
-	handlers.New(ws)
+	defaulthandlers.New(ws)
 
 	err = PrepareTemplate(ws)
 	if err != nil {
@@ -100,7 +100,7 @@ func PrepareTemplate(ws *appsmodel.Webservice) error {
 		Cached: ws.Configuration.Template.Cached,
 	}
 
-	mgr, err := dwtpl.New(cfgtpl)
+	mgr, err := dwtpl.New(cfgtpl, ws.Configuration.Template.Options...)
 	if err != nil {
 		return err
 	}
