@@ -8,12 +8,41 @@ import (
 	"github.com/fgtago/fgweb/appsmodel"
 )
 
+type LoginData struct {
+	LoginError bool
+}
+
 func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+	pv := ctx.Value(appsmodel.PageVariableKeyName).(*appsmodel.PageVariable)
+	pv.Title = fmt.Sprintf("Login - %s", pv.Title)
+	pv.Data = &LoginData{}
+
+	serveLoginPage(w, r, pv)
+}
+
+func DoLoginHandler(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	pv := ctx.Value(appsmodel.PageVariableKeyName).(*appsmodel.PageVariable)
+	pv.Title = fmt.Sprintf("Login - %s", pv.Title)
+	ld := &LoginData{}
+
+	// cek login
+	ld.LoginError = true
+
+	// assign page data
+	pv.Data = ld
+
+	// kalau error, munculin kembali halaman login
+	serveLoginPage(w, r, pv)
+}
+
+func serveLoginPage(w http.ResponseWriter, r *http.Request, pv *appsmodel.PageVariable) {
 	ws := appsmodel.GetWebservice()
+
+	ctx := r.Context()
 	device := ctx.Value(appsmodel.DeviceKeyName).(appsmodel.Device)
 
-	// TODO: implmentasikan tpl
 	tpl, exists, err := ws.TplMgr.GetPage("login", device.Type)
 	if err != nil {
 		// error 500
@@ -29,7 +58,7 @@ func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// render page
 	buff := new(bytes.Buffer)
-	err = tpl.Execute(buff, nil)
+	err = tpl.Execute(buff, &pv)
 	if err != nil {
 		w.WriteHeader(500)
 		fmt.Fprintf(w, "error: %s", err.Error())
@@ -43,8 +72,4 @@ func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "error: %s", err.Error())
 		return
 	}
-}
-
-func DoLoginHandler(w http.ResponseWriter, r *http.Request) {
-
 }

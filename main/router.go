@@ -16,7 +16,7 @@ func Router(mux *chi.Mux) error {
 	fgweb.Get(mux, "/asset/*", defaulthandlers.AssetHandler)
 	fgweb.Get(mux, "/template/*", defaulthandlers.TemplateHandler)
 	fgweb.Get(mux, "/login", defaulthandlers.PageLoginHandler)
-	fgweb.Post(mux, "/login", defaulthandlers.DoLoginHandler)
+	fgweb.Post(mux, "/dologin", defaulthandlers.DoLoginHandler)
 
 	fgweb.Get(mux, "/", defaulthandlers.PageHomeHandler)
 
