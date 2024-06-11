@@ -42,6 +42,8 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 		return nil, err
 	}
 
+	appsmodel.NewWebservice(ws)
+
 	return ws, nil
 }
 

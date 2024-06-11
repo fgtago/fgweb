@@ -10,18 +10,20 @@ import (
 
 func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	app := appsmodel.GetApplication()
+	ws := appsmodel.GetWebservice()
 	device := ctx.Value(appsmodel.DeviceKeyName).(appsmodel.Device)
 
 	// TODO: implmentasikan tpl
-	tpl, exists, err := app.Webservice.TplMgr.GetPage("login", device.Type)
+	tpl, exists, err := ws.TplMgr.GetPage("login", device.Type)
 	if err != nil {
 		// error 500
+		w.WriteHeader(500)
 		fmt.Println(err.Error())
 	}
 
 	if !exists {
 		// error 404
+		w.WriteHeader(404)
 		fmt.Println("404")
 	}
 
@@ -29,6 +31,7 @@ func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 	buff := new(bytes.Buffer)
 	err = tpl.Execute(buff, nil)
 	if err != nil {
+		w.WriteHeader(500)
 		fmt.Fprintf(w, "error: %s", err.Error())
 		return
 	}
@@ -36,7 +39,12 @@ func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 	// send bufer to browser
 	_, err = buff.WriteTo(w)
 	if err != nil {
+		w.WriteHeader(500)
 		fmt.Fprintf(w, "error: %s", err.Error())
 		return
 	}
+}
+
+func DoLoginHandler(w http.ResponseWriter, r *http.Request) {
+
 }

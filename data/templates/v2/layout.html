@@ -9,15 +9,25 @@
 		<link rel="icon" type="image/x-icon" href="favicon.ico">
 
 		<link rel="stylesheet" href="/template/layout.css">
+
+		<!-- CSS dari modul yang di load -->
+		 
 	</head>
 	<body>
+		<!-- Begin: Header-->
 		<div>test ini header template</div>
-		
+		<!-- End: Header -->
+		<hr>
 
+		<!-- Begin: Content -->
 		{{block "pagecontent" .}}
 		{{end}}
+		<!-- End: Content -->
 
+		<hr>
+		<!-- Begin: Footer -->
 		<div>test ini footer template</div>
+		<!-- End: Footer-->
 	</body>
 </html>{{end}}
 
