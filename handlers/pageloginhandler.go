@@ -6,12 +6,11 @@ import (
 	"net/http"
 
 	"github.com/fgtago/fgweb/appsmodel"
-	"github.com/fgtago/fgweb/main/apps"
 )
 
 func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	app := apps.GetApplication()
+	app := appsmodel.GetApplication()
 	device := ctx.Value(appsmodel.DeviceKeyName).(appsmodel.Device)
 
 	// TODO: implmentasikan tpl
