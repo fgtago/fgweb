@@ -85,6 +85,12 @@ func Get(mux *chi.Mux, pattern string, fn http.HandlerFunc) {
 	})
 }
 
+func Post(mux *chi.Mux, pattern string, fn http.HandlerFunc) {
+	mux.Post(pattern, func(w http.ResponseWriter, r *http.Request) {
+		fn(w, r)
+	})
+}
+
 func PrepareTemplate(ws *appsmodel.Webservice) error {
 	// prepare template
 	cfgtpl := &dwtpl.Configuration{
