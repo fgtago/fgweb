@@ -74,6 +74,7 @@ func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
 
 	// middleware
 	mux.Use(midware.MobileDetect)
+	mux.Use(midware.DefaultPageVariable)
 
 	// handle dari main program
 	hnd(mux)
