@@ -27,6 +27,11 @@ func DoLoginHandler(w http.ResponseWriter, r *http.Request) {
 	pv.Title = fmt.Sprintf("Login - %s", pv.Title)
 	ld := &LoginData{}
 
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+
+	fmt.Println(email, password)
+
 	// cek login
 	ld.LoginError = true
 
