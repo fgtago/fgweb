@@ -7,7 +7,6 @@ import (
 	"runtime"
 
 	"github.com/fgtago/fgweb"
-	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -35,10 +34,6 @@ func main() {
 		// ada error saat inisiasi webservice, halt
 		panic(err.Error())
 	}
-
-	// mulai applikasi baru
-	appsmodel.New(ws)
-	appsmodel.SetRootDir(rootDir)
 
 	// info: memulai service
 	port := ws.Configuration.Port

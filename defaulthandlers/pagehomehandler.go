@@ -1,4 +1,4 @@
-package handlers
+package defaulthandlers
 
 import (
 	"bytes"
@@ -6,16 +6,16 @@ import (
 	"net/http"
 
 	"github.com/fgtago/fgweb/appsmodel"
-	"github.com/fgtago/fgweb/main/apps"
 )
 
-func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
+func PageHomeHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	app := apps.GetApplication()
+	ws := appsmodel.GetWebservice()
 	device := ctx.Value(appsmodel.DeviceKeyName).(appsmodel.Device)
+	pv := ctx.Value(appsmodel.PageVariableKeyName).(*appsmodel.PageVariable)
 
 	// TODO: implmentasikan tpl
-	tpl, exists, err := app.Webservice.TplMgr.GetPage("login", device.Type)
+	tpl, exists, err := ws.TplMgr.GetPage("home", device.Type)
 	if err != nil {
 		// error 500
 		fmt.Println(err.Error())
@@ -28,7 +28,7 @@ func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// render page
 	buff := new(bytes.Buffer)
-	err = tpl.Execute(buff, nil)
+	err = tpl.Execute(buff, &pv)
 	if err != nil {
 		fmt.Fprintf(w, "error: %s", err.Error())
 		return

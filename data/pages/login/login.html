@@ -1,9 +1,14 @@
-{{template "layoutdasar"}}
+{{template "layoutdasar" .}}
+
+
+{{define "pagestyle"}}
+<link rel="stylesheet" href="/asset/data/pages/login/login.css">
+{{end}}
 
 {{define "pagecontent"}}
 <h1>Login</h1>
 
-<form method="post">
+<form method="post" action="/dologin">
 	<div>
 		<label for="email">email</label>
 		<input id="email" name="email" type="text" autocomplete="off">
@@ -12,6 +17,11 @@
 		<label for="password">password</label>
 		<input id="password" name="password" type="password">
 	</div>
+	{{if .Data.LoginError}} 
+	<div>
+		login error
+	</div>
+	{{end}}
 	<div>
 		<input type="submit" value="Login">
 	</div>

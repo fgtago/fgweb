@@ -9,7 +9,7 @@ import (
 	"github.com/agungdhewe/dwtpl"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/config"
-	"github.com/fgtago/fgweb/handlers"
+	"github.com/fgtago/fgweb/defaulthandlers"
 	"github.com/fgtago/fgweb/midware"
 	"github.com/fgtago/fgweb/msg"
 	"github.com/go-chi/chi/v5"
@@ -34,13 +34,15 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	ws.Configuration = cfg
 
 	// siapkan keperluan lain
-	handlers.New(ws)
+	defaulthandlers.New(ws)
 
 	err = PrepareTemplate(ws)
 	if err != nil {
 		dwlog.Error(msg.ErrPrepareTemplate)
 		return nil, err
 	}
+
+	appsmodel.NewWebservice(ws)
 
 	return ws, nil
 }
@@ -72,6 +74,7 @@ func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
 
 	// middleware
 	mux.Use(midware.MobileDetect)
+	mux.Use(midware.DefaultPageVariable)
 
 	// handle dari main program
 	hnd(mux)
@@ -85,6 +88,12 @@ func Get(mux *chi.Mux, pattern string, fn http.HandlerFunc) {
 	})
 }
 
+func Post(mux *chi.Mux, pattern string, fn http.HandlerFunc) {
+	mux.Post(pattern, func(w http.ResponseWriter, r *http.Request) {
+		fn(w, r)
+	})
+}
+
 func PrepareTemplate(ws *appsmodel.Webservice) error {
 	// prepare template
 	cfgtpl := &dwtpl.Configuration{
@@ -92,7 +101,7 @@ func PrepareTemplate(ws *appsmodel.Webservice) error {
 		Cached: ws.Configuration.Template.Cached,
 	}
 
-	mgr, err := dwtpl.New(cfgtpl)
+	mgr, err := dwtpl.New(cfgtpl, ws.Configuration.Template.Options...)
 	if err != nil {
 		return err
 	}

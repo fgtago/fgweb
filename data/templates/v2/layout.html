@@ -1,7 +1,7 @@
 {{define "layoutdasar"}}<!doctype html>
 <html>
 	<head>
-		<title>Template</title>
+		<title>{{ .Title }}</title>
 		<meta charset="UTF-8">
 		<meta name="viewport"
 		      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -9,15 +9,33 @@
 		<link rel="icon" type="image/x-icon" href="favicon.ico">
 
 		<link rel="stylesheet" href="/template/layout.css">
+
+		<!-- CSS dari modul yang di load -->
+		{{block "pagestyle" .}}{{end}} 
+
+		
 	</head>
 	<body>
+		<!-- Begin: Header-->
 		<div>test ini header template</div>
-		
+		<div>
+			<a href="/">home</a> 
+			<a href="/login">login</a> profile
 
+
+		</div>
+		<!-- End: Header -->
+		<hr>
+
+		<!-- Begin: Content -->
 		{{block "pagecontent" .}}
 		{{end}}
+		<!-- End: Content -->
 
+		<hr>
+		<!-- Begin: Footer -->
 		<div>test ini footer template</div>
+		<!-- End: Footer-->
 	</body>
 </html>{{end}}
 

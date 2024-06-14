@@ -15,8 +15,9 @@ type Configuration struct {
 		LifeTime int    `yaml:"lifetime"`
 	} `yaml:"cookie"`
 	Template struct {
-		Cached bool   `yaml:"cached"`
-		Dir    string `yaml:"dir"`
+		Cached  bool     `yaml:"cached"`
+		Dir     string   `yaml:"dir"`
+		Options []string `yaml:"options"`
 	} `yaml:"template"`
 	Application struct {
 		PageDir    string `yaml:"pagedir"`
