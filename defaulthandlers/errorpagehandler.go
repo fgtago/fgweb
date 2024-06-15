@@ -21,12 +21,14 @@ func ErrorPageHandler(errnum int, errmsg string, pv *appsmodel.PageVariable, w h
 	// TODO: implmentasikan tpl
 	tpl, exists, err := ws.TplMgr.GetPage("errorpage", device.Type)
 	if err != nil {
-		dwlog.Error(err.Error())
+		dwlog.Warning(err.Error())
+		dwlog.Info("using internal simple error template")
 		simpleErrorPage(errnum, errmsg, w)
 		return
 	}
 
 	if !exists {
+		dwlog.Info("using internal simple error template")
 		simpleErrorPage(errnum, errmsg, w)
 		return
 	}
@@ -35,7 +37,8 @@ func ErrorPageHandler(errnum int, errmsg string, pv *appsmodel.PageVariable, w h
 	buff := new(bytes.Buffer)
 	err = tpl.Execute(buff, &pv)
 	if err != nil {
-		dwlog.Error(err.Error())
+		dwlog.Warning(err.Error())
+		dwlog.Info("using internal simple error template")
 		simpleErrorPage(errnum, errmsg, w)
 		return
 	}
@@ -44,7 +47,8 @@ func ErrorPageHandler(errnum int, errmsg string, pv *appsmodel.PageVariable, w h
 	w.WriteHeader(errnum)
 	_, err = buff.WriteTo(w)
 	if err != nil {
-		dwlog.Error(err.Error())
+		dwlog.Warning(err.Error())
+		dwlog.Info("using internal simple error template")
 		simpleErrorPage(errnum, errmsg, w)
 		return
 	}
