@@ -14,13 +14,13 @@ cookie:
 
 template:
   cached: false
-  dir: "../data/templates/v2"  
+  dir: "data/templates/v2"  
   options:
   - missingkey=error
 
 application:
-  pagedir: "../data/pages"
-  contentdir: "../data/content"
+  pagedir: "data/pages"
+  contentdir: "data/content"
 
 logging:
   enabled: true

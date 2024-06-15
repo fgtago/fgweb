@@ -13,6 +13,7 @@ type Webservice struct {
 	AllowedAsset    map[string]*[]string
 	CurrentWsDir    string
 	ApplicationData any
+	ShowServerError bool
 }
 
 var ws *Webservice
