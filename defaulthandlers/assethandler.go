@@ -11,11 +11,19 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// AssetHandler handles asset requests.
+//
+// It takes in an http.ResponseWriter and an http.Request as parameters.
 func AssetHandler(w http.ResponseWriter, r *http.Request) {
 	pathparam := chi.URLParam(r, "*")
 	serveAsset(pathparam, w, r)
 }
 
+// serveAsset handles asset requests.
+//
+// It takes in a string representing the path to asset parameter, an http.ResponseWriter, and an http.Request as parameters.
+// It checks if the asset can be accessed based on its extension. If it can be accessed, it checks if the asset exists.
+// If the asset exists, it loads the asset and serves it to the client. If there is an error loading the asset, it writes an error message to the http.ResponseWriter.
 func serveAsset(pathparam string, w http.ResponseWriter, r *http.Request) {
 	ws := GetWebservice()
 	setupAllowedAsset(ws)
@@ -55,6 +63,10 @@ func serveAsset(pathparam string, w http.ResponseWriter, r *http.Request) {
 
 }
 
+// setupAllowedAsset initializes the AllowedAsset map in the given Webservice struct.
+//
+// It checks if the AllowedAsset map is nil and if so, creates a new map. Then, it sets default values for various file extensions and their corresponding MIME types.
+// The function does not take any parameters and does not return anything.
 func setupAllowedAsset(ws *appsmodel.Webservice) {
 	if ws.AllowedAsset == nil {
 		ws.AllowedAsset = make(map[string]*[]string)

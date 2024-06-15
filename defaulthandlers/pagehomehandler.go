@@ -8,6 +8,10 @@ import (
 	"github.com/fgtago/fgweb/appsmodel"
 )
 
+// PageHomeHandler handles the HTTP request for the home page.
+//
+// It takes in an http.ResponseWriter and an http.Request as parameters.
+// It returns nothing.
 func PageHomeHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	ws := appsmodel.GetWebservice()

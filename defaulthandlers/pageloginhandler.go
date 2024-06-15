@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/agungdhewe/dwlog"
 	"github.com/fgtago/fgweb/appsmodel"
 )
 
@@ -12,6 +13,10 @@ type LoginData struct {
 	LoginError bool
 }
 
+// PageLoginHandler handles the HTTP request for the login page.
+//
+// It takes in an http.ResponseWriter and an http.Request as parameters.
+// It does not return anything.
 func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	pv := ctx.Value(appsmodel.PageVariableKeyName).(*appsmodel.PageVariable)
@@ -21,6 +26,17 @@ func PageLoginHandler(w http.ResponseWriter, r *http.Request) {
 	serveLoginPage(w, r, pv)
 }
 
+// DoLoginHandler handles the HTTP request for the login page.
+//
+// It takes in an http.ResponseWriter and an http.Request as parameters.
+// It does not return anything.
+//
+// The function retrieves the PageVariable from the context and sets its title to "Login - {original title}".
+// It then creates a new LoginData struct and assigns it to the PageVariable's Data field.
+// The function retrieves the email and password from the request's form values.
+// It logs the email and password using the dwlog.Info function.
+// The function sets the LoginError field of the LoginData struct to true.
+// The function calls the serveLoginPage function with the provided parameters.
 func DoLoginHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	pv := ctx.Value(appsmodel.PageVariableKeyName).(*appsmodel.PageVariable)
@@ -30,7 +46,7 @@ func DoLoginHandler(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 
-	fmt.Println(email, password)
+	dwlog.Info("email: %s, password: %s", email, password)
 
 	// cek login
 	ld.LoginError = true
@@ -42,6 +58,14 @@ func DoLoginHandler(w http.ResponseWriter, r *http.Request) {
 	serveLoginPage(w, r, pv)
 }
 
+// serveLoginPage renders the login page and sends it to the browser.
+//
+// Parameters:
+// - w: the http.ResponseWriter to write the rendered page to.
+// - r: the http.Request that triggered the login page.
+// - pv: the *appsmodel.PageVariable containing the data for the login page.
+//
+// Returns: nothing.
 func serveLoginPage(w http.ResponseWriter, r *http.Request, pv *appsmodel.PageVariable) {
 	ws := appsmodel.GetWebservice()
 

@@ -37,6 +37,7 @@ func main() {
 
 	// info: memulai service
 	port := ws.Configuration.Port
+	fmt.Println("service running on port:", port)
 	err = fgweb.StartService(port, func(mux *chi.Mux) error {
 		return Router(mux)
 	})

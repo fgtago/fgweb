@@ -12,6 +12,15 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// TemplateHandler handles template requests.
+//
+// It takes in an http.ResponseWriter and an http.Request as parameters.
+// It retrieves the webservice and sets up allowed assets.
+// It retrieves the device from the request context and extracts the filename and extension.
+// It checks if the asset can be accessed based on its extension. If it cannot be accessed, it writes an error message to the http.ResponseWriter.
+// It checks if there is an asset created for mobile or tablet. If there is, it modifies the filename and checks if the asset exists.
+// If the asset exists, it checks if the asset exists. If it does not exist, it writes an error message to the http.ResponseWriter.
+// It loads the asset and serves it to the client. If there is an error loading the asset, it writes an error message to the http.ResponseWriter.
 func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 	ws := GetWebservice()
 	setupAllowedAsset(ws)
