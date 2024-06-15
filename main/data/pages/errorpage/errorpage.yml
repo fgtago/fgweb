@@ -1,0 +1,10 @@
+title: Home
+
+device:
+  mobile:
+    - errorpage.html
+  tablet:
+    - errorpage.html
+  desktop:
+    - errorpage.html
+        

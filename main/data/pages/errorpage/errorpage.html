@@ -1,0 +1,12 @@
+{{template "layoutdasar" .}}
+
+{{define "pagestyle"}}
+{{end}}
+
+
+{{define "pagecontent"}}
+<div>
+	<h1>Error {{.HttpErrorNumber}}</h1>
+	{{.HttpErrorMessage}}
+</div>
+{{end}}

@@ -105,6 +105,13 @@ func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
 	// handle dari main program
 	hnd(mux)
 
+	// kalau halaman tidak ditemukan
+	mux.NotFound(func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		pv := ctx.Value(appsmodel.PageVariableKeyName).(*appsmodel.PageVariable)
+		defaulthandlers.ErrorPageHandler(404, "page not found", pv, w, r)
+	})
+
 	return mux
 }
 
