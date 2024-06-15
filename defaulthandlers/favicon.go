@@ -20,7 +20,7 @@ func FaviconHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO: cek apakah ada
 	exists, _, _ := dwpath.IsFileExists(faviconpath)
 	if !exists {
-		faviconpath = filepath.Join(ws.CurrentWsDir, "data", "images", "favicon.ico")
+		faviconpath = filepath.Join(ws.CurrentWsDir, "defaulthandlers", "favicon.ico")
 	}
 
 	http.ServeFile(w, r, faviconpath)
