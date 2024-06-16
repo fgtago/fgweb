@@ -18,8 +18,7 @@ func ErrorPageHandler(errnum int, errmsg string, pv *appsmodel.PageVariable, w h
 	pv.HttpErrorNumber = errnum
 	pv.HttpErrorMessage = errmsg
 
-	// TODO: implmentasikan tpl
-	tpl, exists, err := ws.TplMgr.GetPage("errorpage", device.Type)
+	page, err := ws.TplMgr.GetPage("errorpage")
 	if err != nil {
 		dwlog.Warning(err.Error())
 		dwlog.Info("using internal simple error template")
@@ -27,7 +26,9 @@ func ErrorPageHandler(errnum int, errmsg string, pv *appsmodel.PageVariable, w h
 		return
 	}
 
-	if !exists {
+	tpl, inmap := page.Data[device.Type]
+	if !inmap {
+		dwlog.Warning("template not found for device type: %s", device.Type)
 		dwlog.Info("using internal simple error template")
 		simpleErrorPage(errnum, errmsg, w)
 		return

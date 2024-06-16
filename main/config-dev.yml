@@ -1,6 +1,7 @@
 port: 8700
 
 favicon: "favicon.ico"
+title: "FGWeb"
 
 database:
   server: localhost
