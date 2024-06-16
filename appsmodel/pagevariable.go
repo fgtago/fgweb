@@ -1,8 +1,10 @@
 package appsmodel
 
-import "net/http"
+import (
+	"github.com/agungdhewe/dwtpl"
+)
 
-type PageVariableMidleware func(w http.ResponseWriter, r *http.Request) error
+type PageVariableMidleware func(pv *PageVariable, pg *dwtpl.PageConfig) error
 
 type PageVariable struct {
 	PageName         string

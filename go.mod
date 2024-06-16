@@ -12,4 +12,4 @@ require github.com/agungdhewe/dwpath v1.1.2
 
 require github.com/agungdhewe/dwlog v1.2.3
 
-require github.com/agungdhewe/dwtpl v0.0.0-20240615014528-01018b405577
+require github.com/agungdhewe/dwtpl v1.2.3 // indirect

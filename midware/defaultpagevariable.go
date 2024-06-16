@@ -12,9 +12,10 @@ import (
 // It takes in an http.Handler as a parameter and returns an http.Handler.
 func DefaultPageVariable(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ws := appsmodel.GetWebservice()
 
 		pv := &appsmodel.PageVariable{
-			Title: "Template",
+			Title: ws.Configuration.Title,
 		}
 
 		ctx := context.WithValue(r.Context(), appsmodel.PageVariableKeyName, pv)

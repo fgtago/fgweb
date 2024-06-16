@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
-	"github.com/agungdhewe/dwtpl"
 	"github.com/fgtago/fgweb"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/defaulthandlers"
@@ -34,14 +32,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	pv.PageName = "home"
 	pv.Data = &PageData{}
 
-	pv.Use(func(pv *appsmodel.PageVariable, layout *dwtpl.Layout) error {
-		fmt.Println("on reading page")
+	// pv.Use(func(w http.ResponseWriter, r *http.Request) error {
+	// 	fmt.Println("on reading page")
 
-		data := pv.Data.(*PageData)
-		data.Nama = "jojon"
+	// 	pv.Title = "Home - " + pv.Title
+	// 	data := pv.Data.(*PageData)
+	// 	data.Nama = "jojon"
 
-		return nil
-	})
+	// 	return nil
+	// })
 
 	defaulthandlers.SimplePageHandler(pv, w, r)
 }

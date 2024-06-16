@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/agungdhewe/dwlog"
-	"github.com/agungdhewe/dwtpl"
 	"github.com/fgtago/fgweb/appsmodel"
 )
 
@@ -15,10 +14,27 @@ func SimplePageHandler(pv *appsmodel.PageVariable, w http.ResponseWriter, r *htt
 	ws := appsmodel.GetWebservice()
 	device := ctx.Value(appsmodel.DeviceKeyName).(appsmodel.Device)
 
+	// TODO: implmentasikan tpl
+	page, err := ws.TplMgr.GetPage(pv.PageName)
+	if err != nil {
+		if ws.ShowServerError {
+			ErrorPageHandler(500, err.Error(), pv, w, r)
+		} else {
+			dwlog.Error(err.Error())
+			ErrorPageHandler(500, "internal server error", pv, w, r)
+		}
+		return
+	}
+
+	// Sesuaikan title
+	if page.Config.Title != "" {
+		pv.Title = fmt.Sprintf("%s - %s", page.Config.Title, ws.Configuration.Title)
+	}
+
 	// jalankan semua middleware
 	if pv.MidleWares != nil {
 		for _, mw := range *pv.MidleWares {
-			err := mw(pv, &dwtpl.Layout{})
+			err := mw(pv, page.Config)
 			if err != nil {
 				if ws.ShowServerError {
 					ErrorPageHandler(500, err.Error(), pv, w, r)
@@ -31,21 +47,10 @@ func SimplePageHandler(pv *appsmodel.PageVariable, w http.ResponseWriter, r *htt
 		}
 	}
 
-	// TODO: implmentasikan tpl
-	tpl, exists, err := ws.TplMgr.GetPage(pv.PageName, device.Type)
-	if err != nil {
-		if ws.ShowServerError {
-			ErrorPageHandler(500, err.Error(), pv, w, r)
-		} else {
-			dwlog.Error(err.Error())
-			ErrorPageHandler(500, "internal server error", pv, w, r)
-		}
-		return
-	}
-
-	if !exists {
+	tpl, inmap := page.Data[device.Type]
+	if !inmap {
 		// error 404
-		ErrorPageHandler(404, fmt.Sprintf("page %s not found", pv.PageName), pv, w, r)
+		ErrorPageHandler(500, fmt.Sprintf("correnponding page template %s not found", pv.PageName), pv, w, r)
 		return
 	}
 
