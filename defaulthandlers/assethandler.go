@@ -72,21 +72,21 @@ func setupAllowedAsset(ws *appsmodel.Webservice) {
 		ws.AllowedAsset = make(map[string]*[]string)
 
 		ws.AllowedAsset[".pdf"] = &[]string{"application/pdf"}
-
-		ws.AllowedAsset[".js"] = &[]string{"text/javascript"}
 		ws.AllowedAsset[".mjs"] = &[]string{"application/javascript"}
+		ws.AllowedAsset[".json"] = &[]string{"application/json"}
 
 		ws.AllowedAsset[".css"] = &[]string{"text/css"}
+		ws.AllowedAsset[".js"] = &[]string{"text/javascript"}
 
-		ws.AllowedAsset[".jpg"] = &[]string{"image/jpeg"}
 		ws.AllowedAsset[".jpeg"] = &[]string{"image/jpeg"}
+		ws.AllowedAsset[".jpg"] = &[]string{"image/jpeg"}
 		ws.AllowedAsset[".gif"] = &[]string{"image/gif"}
 		ws.AllowedAsset[".png"] = &[]string{"image/png"}
 		ws.AllowedAsset[".svg"] = &[]string{"image/svg+xml"}
 		ws.AllowedAsset[".png"] = &[]string{"image/png"}
-
 		ws.AllowedAsset[".ico"] = &[]string{"image/vnd.microsoft.icon"}
 
 		ws.AllowedAsset[".woff2"] = &[]string{"font/woff2"}
+
 	}
 }
