@@ -1,6 +1,8 @@
 port: 8700
 
 favicon: "<your favicon>"
+title: "<your title>"
+showservererror: false
 
 database:
   server: "<your database server>"
