@@ -73,7 +73,6 @@ func setupAllowedAsset(ws *appsmodel.Webservice) {
 
 		ws.AllowedAsset[".pdf"] = &[]string{"application/pdf"}
 		ws.AllowedAsset[".mjs"] = &[]string{"application/javascript"}
-		ws.AllowedAsset[".json"] = &[]string{"application/json"}
 
 		ws.AllowedAsset[".css"] = &[]string{"text/css"}
 		ws.AllowedAsset[".js"] = &[]string{"text/javascript"}
