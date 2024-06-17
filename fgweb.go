@@ -45,6 +45,9 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	}
 	ws.Configuration = cfg
 
+	// set show server error
+	ws.ShowServerError = ws.Configuration.ShowServerError
+
 	// siapkan keperluan lain
 	defaulthandlers.New(ws)
 
