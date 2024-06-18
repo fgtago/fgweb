@@ -2,6 +2,7 @@ package appsmodel
 
 import (
 	"github.com/agungdhewe/dwtpl"
+	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -14,6 +15,7 @@ type Webservice struct {
 	CurrentWsDir    string
 	ApplicationData any
 	ShowServerError bool
+	SessMgr         *scs.SessionManager
 }
 
 var ws *Webservice

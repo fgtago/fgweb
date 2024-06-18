@@ -12,5 +12,7 @@ require github.com/agungdhewe/dwpath v1.1.2
 
 require (
 	github.com/agungdhewe/dwlog v1.2.3
-	github.com/agungdhewe/dwtpl v1.2.3
+	github.com/agungdhewe/dwtpl v1.2.4
 )
+
+require github.com/alexedwards/scs/v2 v2.8.0
