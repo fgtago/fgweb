@@ -5,14 +5,17 @@ import (
 	"net/http"
 	"path/filepath"
 	"runtime"
+	"time"
 
 	"github.com/agungdhewe/dwlog"
 	"github.com/agungdhewe/dwtpl"
+	"github.com/alexedwards/scs/v2"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/config"
 	"github.com/fgtago/fgweb/defaulthandlers"
 	"github.com/fgtago/fgweb/midware"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 type RouteHandlerFunc func(mux *chi.Mux) error
@@ -47,6 +50,14 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 
 	// set show server error
 	ws.ShowServerError = ws.Configuration.ShowServerError
+
+	// siapkan session manager
+	session := scs.New()
+	session.Lifetime = time.Duration(ws.Configuration.Cookie.LifeTime) * time.Hour
+	session.Cookie.Persist = ws.Configuration.Cookie.Persist
+	session.Cookie.Secure = ws.Configuration.Cookie.Secure
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	ws.Session = session
 
 	// siapkan keperluan lain
 	defaulthandlers.New(ws)
@@ -99,9 +110,21 @@ func StartService(port int, hnd RouteHandlerFunc) (err error) {
 // Returns:
 // - *chi.Mux: The configured router.
 func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
+	// ws := appsmodel.GetWebservice()
+
 	mux := chi.NewRouter()
 
-	// middleware
+	// external middleware
+	mux.Use(middleware.Recoverer)
+
+	// testing if page is hit
+	if ws.Configuration.HitTest {
+		mux.Use(midware.HitTest)
+	}
+
+	// internal middleware
+	mux.Use(midware.Csrf)
+	mux.Use(midware.SessionLoader)
 	mux.Use(midware.MobileDetect)
 	mux.Use(midware.DefaultPageVariable)
 
