@@ -14,6 +14,7 @@ type PageVariable struct {
 	Form             *Form
 	Data             any
 	MidleWares       *[]PageVariableMidleware
+	CsrfToken        string
 }
 
 func (pv *PageVariable) Use(mw PageVariableMidleware) {

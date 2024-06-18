@@ -16,7 +16,6 @@ type Webservice struct {
 	ApplicationData any
 	ShowServerError bool
 	Session         *scs.SessionManager
-	CsrfToken       string
 }
 
 var ws *Webservice

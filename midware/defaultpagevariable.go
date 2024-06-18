@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/fgtago/fgweb/appsmodel"
+	"github.com/justinas/nosurf"
 )
 
 // DefaultPageVariable creates a middleware that sets up the default page variable and passes it to the next handler.
@@ -21,6 +22,8 @@ func DefaultPageVariable(next http.Handler) http.Handler {
 			pv := &appsmodel.PageVariable{
 				Title: ws.Configuration.Title,
 			}
+
+			pv.CsrfToken = nosurf.Token(r)
 
 			if ws.Configuration.HitTest {
 				fmt.Println("create default variable", r.URL.Path)
