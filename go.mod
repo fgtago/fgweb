@@ -15,5 +15,4 @@ require (
 	github.com/agungdhewe/dwtpl v1.2.4
 )
 
-require github.com/agungdhewe/dwtpl v1.2.4
 require github.com/alexedwards/scs/v2 v2.8.0
