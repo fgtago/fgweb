@@ -5,14 +5,17 @@ import (
 	"net/http"
 	"path/filepath"
 	"runtime"
+	"time"
 
 	"github.com/agungdhewe/dwlog"
 	"github.com/agungdhewe/dwtpl"
+	"github.com/alexedwards/scs/v2"
 	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/fgtago/fgweb/config"
 	"github.com/fgtago/fgweb/defaulthandlers"
 	"github.com/fgtago/fgweb/midware"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 type RouteHandlerFunc func(mux *chi.Mux) error
@@ -47,6 +50,14 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 
 	// set show server error
 	ws.ShowServerError = ws.Configuration.ShowServerError
+
+	// siapkan session manager
+	sessmgr := scs.New()
+	sessmgr.Lifetime = time.Duration(ws.Configuration.Cookie.LifeTime) * time.Hour
+	sessmgr.Cookie.Persist = ws.Configuration.Cookie.Persist
+	sessmgr.Cookie.Secure = ws.Configuration.Cookie.Secure
+	sessmgr.Cookie.SameSite = http.SameSiteLaxMode
+	ws.SessMgr = sessmgr
 
 	// siapkan keperluan lain
 	defaulthandlers.New(ws)
@@ -101,7 +112,11 @@ func StartService(port int, hnd RouteHandlerFunc) (err error) {
 func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
 	mux := chi.NewRouter()
 
-	// middleware
+	// external middleware
+	mux.Use(middleware.Recoverer)
+
+	// internal middleware
+	mux.Use(midware.Csrf)
 	mux.Use(midware.MobileDetect)
 	mux.Use(midware.DefaultPageVariable)
 
