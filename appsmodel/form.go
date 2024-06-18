@@ -18,7 +18,7 @@ type Form struct {
 //
 // values: The form values to initialize the Form.
 // Returns a pointer to the newly created Form.
-func New(values url.Values) *Form {
+func NewForm(values url.Values) *Form {
 	return &Form{
 		Values: values,
 		Errors: make(formerrors),
