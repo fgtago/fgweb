@@ -2,6 +2,7 @@ package midware
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/agungdhewe/dwtpl"
@@ -17,20 +18,30 @@ import (
 // The detected device type is stored in the request context with the key appsmodel.DeviceKeyName.
 // The next http.Handler is then called with the modified request and response writer.
 func MobileDetect(next http.Handler) http.Handler {
+	ws := appsmodel.GetWebservice()
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		device := appsmodel.Device{}
-
-		// detek device yang dipakai user saat ini
-		currentDevice := mobiledetect.New(r, nil)
-		if currentDevice.IsTablet() {
-			device.Type = dwtpl.DeviceTablet
-		} else if currentDevice.IsMobile() {
-			device.Type = dwtpl.DeviceMobile
+		if IsAsset(r.URL.Path) {
+			next.ServeHTTP(w, r)
 		} else {
-			device.Type = dwtpl.DeviceDesktop
-		}
+			if ws.Configuration.HitTest {
+				fmt.Println("cek device", r.URL.Path)
+			}
 
-		ctx := context.WithValue(r.Context(), appsmodel.DeviceKeyName, device)
-		next.ServeHTTP(w, r.WithContext(ctx))
+			device := appsmodel.Device{}
+
+			// detek device yang dipakai user saat ini
+			currentDevice := mobiledetect.New(r, nil)
+			if currentDevice.IsTablet() {
+				device.Type = dwtpl.DeviceTablet
+			} else if currentDevice.IsMobile() {
+				device.Type = dwtpl.DeviceMobile
+			} else {
+				device.Type = dwtpl.DeviceDesktop
+			}
+
+			ctx := context.WithValue(r.Context(), appsmodel.DeviceKeyName, device)
+			next.ServeHTTP(w, r.WithContext(ctx))
+		}
 	})
 }
