@@ -2,10 +2,6 @@ github.com/agungdhewe/dwlog v1.2.3 h1:D6BhhH4YexfjPe9ULDoSh4aMSzXdGOVG95mNlRhFBz
 github.com/agungdhewe/dwlog v1.2.3/go.mod h1:MDbg+nx7DjBk8Hod+dVHdxVgFig8WsUo2fovLL6Tj5I=
 github.com/agungdhewe/dwpath v1.1.2 h1:DHddEd4sgKRC6lNavwuySslMPDDw9TLSL0ext6CY9m0=
 github.com/agungdhewe/dwpath v1.1.2/go.mod h1:588x6doLfhBTv9iohuenVaHKpVDQtDvzH4Iku9uSDNE=
-github.com/agungdhewe/dwtpl v0.0.0-20240616204056-1ab2ecbed5e4 h1:q2gwL9HaOLBVRpzMIj8udEfl+0lRCk3hF6wsDbT1UtQ=
-github.com/agungdhewe/dwtpl v0.0.0-20240616204056-1ab2ecbed5e4/go.mod h1:+KLvD8JKVkfT0yPquajigxuv0UR8gmjLnoEi/7+RAJc=
-github.com/agungdhewe/dwtpl v1.2.2 h1:AIxhWQe3XmJTg69H9lXllGrFFKVsUEoHA6TnHDcfdZo=
-github.com/agungdhewe/dwtpl v1.2.2/go.mod h1:+KLvD8JKVkfT0yPquajigxuv0UR8gmjLnoEi/7+RAJc=
 github.com/agungdhewe/dwtpl v1.2.3 h1:3xdUckNFSEJHNd/+wbxBPMnF7WxSTp4b2kR0F4ycuzw=
 github.com/agungdhewe/dwtpl v1.2.3/go.mod h1:+KLvD8JKVkfT0yPquajigxuv0UR8gmjLnoEi/7+RAJc=
 github.com/go-chi/chi/v5 v5.0.12 h1:9euLV5sTrTNTRUU9POmDUvfxyj6LAABLUcEWO+JJb4s=
