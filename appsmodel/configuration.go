@@ -10,10 +10,10 @@ type Configuration struct {
 		UserName string `yaml:"username"`
 		Password string `yaml:"password"`
 	} `yaml:"database"`
-	SecureCookie bool `yaml:"securecookie"`
-	Cookie       struct {
-		Secure   string `yaml:"secure"`
-		LifeTime int    `yaml:"lifetime"`
+	Cookie struct {
+		Persist  bool `yaml:"persist"`
+		Secure   bool `yaml:"secure"`
+		LifeTime int  `yaml:"lifetime"`
 	} `yaml:"cookie"`
 	Template struct {
 		Cached  bool     `yaml:"cached"`
