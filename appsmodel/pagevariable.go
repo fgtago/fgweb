@@ -11,6 +11,7 @@ type PageVariable struct {
 	Title            string
 	HttpErrorNumber  int
 	HttpErrorMessage string
+	Form             *Form
 	Data             any
 	MidleWares       *[]PageVariableMidleware
 }
