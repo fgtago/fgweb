@@ -1,6 +1,7 @@
 package midware
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/fgtago/fgweb/appsmodel"
@@ -18,5 +19,14 @@ func Csrf(next http.Handler) http.Handler {
 		SameSite: http.SameSiteStrictMode,
 	})
 
-	return csrfHandler
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if IsAsset(r.URL.Path) || IsTemplate(r.URL.Path) {
+			next.ServeHTTP(w, r)
+		} else {
+			if ws.Configuration.HitTest {
+				fmt.Println("csrf", r.URL.Path)
+			}
+			csrfHandler.ServeHTTP(w, r)
+		}
+	})
 }

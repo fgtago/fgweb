@@ -28,5 +28,6 @@ type Configuration struct {
 		Enabled bool `yaml:"enabled"`
 	} `yaml:"logging"`
 	ShowServerError bool `yaml:"showservererror"`
+	HitTest         bool `yaml:"hittest"`
 	ConfigPath      string
 }

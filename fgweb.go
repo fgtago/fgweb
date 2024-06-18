@@ -52,12 +52,12 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	ws.ShowServerError = ws.Configuration.ShowServerError
 
 	// siapkan session manager
-	sessmgr := scs.New()
-	sessmgr.Lifetime = time.Duration(ws.Configuration.Cookie.LifeTime) * time.Hour
-	sessmgr.Cookie.Persist = ws.Configuration.Cookie.Persist
-	sessmgr.Cookie.Secure = ws.Configuration.Cookie.Secure
-	sessmgr.Cookie.SameSite = http.SameSiteLaxMode
-	ws.SessMgr = sessmgr
+	session := scs.New()
+	session.Lifetime = time.Duration(ws.Configuration.Cookie.LifeTime) * time.Hour
+	session.Cookie.Persist = ws.Configuration.Cookie.Persist
+	session.Cookie.Secure = ws.Configuration.Cookie.Secure
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	ws.Session = session
 
 	// siapkan keperluan lain
 	defaulthandlers.New(ws)
@@ -110,13 +110,21 @@ func StartService(port int, hnd RouteHandlerFunc) (err error) {
 // Returns:
 // - *chi.Mux: The configured router.
 func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
+	// ws := appsmodel.GetWebservice()
+
 	mux := chi.NewRouter()
 
 	// external middleware
 	mux.Use(middleware.Recoverer)
 
+	// testing if page is hit
+	if ws.Configuration.HitTest {
+		mux.Use(midware.HitTest)
+	}
+
 	// internal middleware
 	mux.Use(midware.Csrf)
+	mux.Use(midware.SessionLoader)
 	mux.Use(midware.MobileDetect)
 	mux.Use(midware.DefaultPageVariable)
 

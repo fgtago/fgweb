@@ -11,7 +11,8 @@ database:
   password: "<your database password>"
 
 cookie: 
-  secure: true
+  persist: true
+  secure: false
   lifetime: 24
 
 template:
@@ -23,6 +24,8 @@ template:
 application:
   pagedir: "data/pages"
   contentdir: "data/content"
+
+hittest: false
 
 logging:
   enabled: true

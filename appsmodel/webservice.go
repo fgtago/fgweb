@@ -15,7 +15,8 @@ type Webservice struct {
 	CurrentWsDir    string
 	ApplicationData any
 	ShowServerError bool
-	SessMgr         *scs.SessionManager
+	Session         *scs.SessionManager
+	CsrfToken       string
 }
 
 var ws *Webservice
