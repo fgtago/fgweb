@@ -17,6 +17,7 @@ type Webservice struct {
 	ShowServerError bool
 	Session         *scs.SessionManager
 	CsrfToken       string
+	Form            *Form
 }
 
 var ws *Webservice
