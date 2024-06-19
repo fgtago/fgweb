@@ -1,6 +1,9 @@
 package appsmodel
 
-import "net/url"
+import (
+	"net/url"
+	"strings"
+)
 
 type FormError struct {
 	FieldName string
@@ -34,7 +37,23 @@ func NewForm(values url.Values) *Form {
 // - bool: true if the field is present in the form, false otherwise.
 func (f *Form) Has(field string) bool {
 	x := f.Get(field)
-	return x != ""
+	return strings.TrimSpace(x) != ""
+}
+
+func (f *Form) Needs(field string) {
+	if !f.Has(field) {
+		f.Errors.Add(field, "This field cannot be blank")
+	}
+}
+
+func (f *Form) Valid() bool {
+	return len(f.Errors) == 0
+}
+
+func (f *Form) Require(fields ...string) {
+	for _, field := range fields {
+		f.Needs(field)
+	}
 }
 
 // Add adds a new FormError to the errors map.
