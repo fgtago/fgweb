@@ -127,6 +127,7 @@ func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
 	mux.Use(midware.SessionLoader)
 	mux.Use(midware.MobileDetect)
 	mux.Use(midware.DefaultPageVariable)
+	mux.Use(midware.User)
 
 	// handle dari main program
 	hnd(mux)
