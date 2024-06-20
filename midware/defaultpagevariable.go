@@ -23,6 +23,8 @@ func DefaultPageVariable(next http.Handler) http.Handler {
 				Title: ws.Configuration.Title,
 			}
 
+			pv.Request = r
+			pv.Response = w
 			pv.CsrfToken = nosurf.Token(r)
 
 			if ws.Configuration.HitTest {
