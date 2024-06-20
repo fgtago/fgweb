@@ -19,14 +19,14 @@ func Router(mux *chi.Mux) error {
 	fgweb.Get(mux, "/asset/*", defaulthandlers.AssetHandler)
 	fgweb.Get(mux, "/template/*", defaulthandlers.TemplateHandler)
 
-	fgweb.Get(mux, "/", Home)
-	fgweb.Get(mux, "/about", About)
+	fgweb.Get(mux, "/", DefaultHome)
+	fgweb.Get(mux, "/about", DefaultAbout)
 
 	return nil
 
 }
 
-func Home(w http.ResponseWriter, r *http.Request) {
+func DefaultHome(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	pv := ctx.Value(appsmodel.PageVariableKeyName).(*appsmodel.PageVariable)
 	pv.PageName = "home"
@@ -45,7 +45,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	defaulthandlers.SimplePageHandler(pv, w, r)
 }
 
-func About(w http.ResponseWriter, r *http.Request) {
+func DefaultAbout(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	pv := ctx.Value(appsmodel.PageVariableKeyName).(*appsmodel.PageVariable)
 	pv.PageName = "about"

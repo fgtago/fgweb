@@ -50,7 +50,7 @@ func (f *Form) Valid() bool {
 	return len(f.Errors) == 0
 }
 
-func (f *Form) Require(fields ...string) {
+func (f *Form) Requires(fields ...string) {
 	for _, field := range fields {
 		f.Needs(field)
 	}

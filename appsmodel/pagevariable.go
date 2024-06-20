@@ -1,6 +1,8 @@
 package appsmodel
 
 import (
+	"net/http"
+
 	"github.com/agungdhewe/dwtpl"
 )
 
@@ -15,6 +17,12 @@ type PageVariable struct {
 	Data             any
 	MidleWares       *[]PageVariableMidleware
 	CsrfToken        string
+	Request          *http.Request
+	Response         http.ResponseWriter
+	UserId           string
+	UserNickName     string
+	UserFullName     string
+	IsAuthenticated  bool
 }
 
 func (pv *PageVariable) Use(mw PageVariableMidleware) {
