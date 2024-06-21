@@ -46,8 +46,12 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 	// apakah ada asset yang dibuat untuk mobile/tablet ?
 	if device.Type == dwtpl.DeviceMobile || device.Type == dwtpl.DeviceTablet {
 		dir := filepath.Dir(pathparam)
-		filename = fmt.Sprintf("%s~%s", device.Type, filename)
+		filename = fmt.Sprintf("%s~%s", filename, device.Type)
 		path = filepath.Join(ws.RootDir, ws.Configuration.Template.Dir, dir, filename)
+
+		fmt.Println("template mobile/tablet")
+		fmt.Println(path)
+
 		exist, _, _ = dwpath.IsFileExists(path)
 		if exist {
 			pathparam = filepath.Join(dir, filename)
