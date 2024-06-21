@@ -7,8 +7,6 @@ import (
 	"path/filepath"
 
 	"github.com/agungdhewe/dwpath"
-	"github.com/agungdhewe/dwtpl"
-	"github.com/fgtago/fgweb/appsmodel"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -25,9 +23,6 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 	ws := GetWebservice()
 	setupAllowedAsset(ws)
 
-	ctx := r.Context()
-	device := ctx.Value(appsmodel.DeviceKeyName).(appsmodel.Device)
-
 	pathparam := chi.URLParam(r, "*")
 	filename := filepath.Base(pathparam)
 	extension := filepath.Ext(filename)
@@ -41,25 +36,9 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var exist bool
-	var path string
-
-	// apakah ada asset yang dibuat untuk mobile/tablet ?
-	if device.Type == dwtpl.DeviceMobile || device.Type == dwtpl.DeviceTablet {
-		dir := filepath.Dir(pathparam)
-		filename = fmt.Sprintf("%s~%s", filename, device.Type)
-		path = filepath.Join(ws.RootDir, ws.Configuration.Template.Dir, dir, filename)
-
-		fmt.Println("template mobile/tablet")
-		fmt.Println(path)
-
-		exist, _, _ = dwpath.IsFileExists(path)
-		if exist {
-			pathparam = filepath.Join(dir, filename)
-		}
-	}
 
 	// cek apakah asset ada
-	path = filepath.Join(ws.RootDir, ws.Configuration.Template.Dir, pathparam)
+	path := filepath.Join(ws.RootDir, ws.Configuration.Template.Dir, pathparam)
 	exist, _, _ = dwpath.IsFileExists(path)
 	if !exist {
 		w.WriteHeader(404)

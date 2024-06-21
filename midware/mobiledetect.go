@@ -21,7 +21,7 @@ func MobileDetect(next http.Handler) http.Handler {
 	ws := appsmodel.GetWebservice()
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if IsAsset(r.URL.Path) {
+		if IsAsset(r.URL.Path) || IsTemplate(r.URL.Path) {
 			next.ServeHTTP(w, r)
 		} else {
 			if ws.Configuration.HitTest {
