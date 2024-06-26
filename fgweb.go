@@ -73,6 +73,19 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	return ws, nil
 }
 
+func CreateServer(port int, hnd RouteHandlerFunc) *http.Server {
+	// buat router
+	ws.Mux = httpRequestHandler(hnd)
+
+	// siapkan server
+	srv := &http.Server{
+		Addr:    fmt.Sprintf(":%d", port),
+		Handler: ws.Mux,
+	}
+
+	return srv
+}
+
 // StartService starts the web service on the specified port and handles incoming requests using the provided RouteHandlerFunc.
 //
 // Parameters:
@@ -100,6 +113,10 @@ func StartService(port int, hnd RouteHandlerFunc) (err error) {
 	}
 
 	return nil
+}
+
+func CreateRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
+	return httpRequestHandler(hnd)
 }
 
 // httpRequestHandler creates a new router and sets up middleware before invoking the provided RouteHandlerFunc.
