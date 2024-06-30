@@ -21,3 +21,11 @@ func IsAsset(url string) bool {
 		return false
 	}
 }
+
+func IsApi(url string) bool {
+	if strings.HasPrefix(url, "/api/") {
+		return true
+	} else {
+		return false
+	}
+}
