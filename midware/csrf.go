@@ -14,9 +14,9 @@ func Csrf(next http.Handler) http.Handler {
 
 	csrfHandler.SetBaseCookie(http.Cookie{
 		HttpOnly: true,
-		Path:     "/",
-		Secure:   ws.Configuration.Cookie.Secure,
-		SameSite: http.SameSiteStrictMode,
+		Secure:   ws.Session.Cookie.Secure,
+		SameSite: ws.Session.Cookie.SameSite,
+		Path:     ws.Session.Cookie.Path,
 	})
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

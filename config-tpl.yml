@@ -14,7 +14,9 @@ cookie:
   persist: true
   secure: false
   lifetime: 24
-
+  samesite: Lax
+  path: /
+  
 template:
   cached: false
   dir: "data/templates"  

@@ -56,7 +56,23 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	session.Lifetime = time.Duration(ws.Configuration.Cookie.LifeTime) * time.Hour
 	session.Cookie.Persist = ws.Configuration.Cookie.Persist
 	session.Cookie.Secure = ws.Configuration.Cookie.Secure
+	session.Cookie.Path = ws.Configuration.Cookie.Path
+
+	/*
+		if ws.Configuration.Cookie.SameSite == "lax" {
+			session.Cookie.SameSite = http.SameSiteLaxMode
+		} else if ws.Configuration.Cookie.SameSite == "strict" {
+			session.Cookie.SameSite = http.SameSiteStrictMode
+		} else if ws.Configuration.Cookie.SameSite == "none" {
+			session.Cookie.SameSite = http.SameSiteNoneMode
+		} else {
+			session.Cookie.SameSite = http.SameSiteDefaultMode
+		}
+	*/
+
 	session.Cookie.SameSite = http.SameSiteLaxMode
+	fmt.Println(session.Cookie.SameSite, ws.Configuration.Cookie.SameSite)
+
 	ws.Session = session
 
 	// siapkan keperluan lain

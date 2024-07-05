@@ -11,9 +11,11 @@ type Configuration struct {
 		Password string `yaml:"password"`
 	} `yaml:"database"`
 	Cookie struct {
-		Persist  bool `yaml:"persist"`
-		Secure   bool `yaml:"secure"`
-		LifeTime int  `yaml:"lifetime"`
+		Persist  bool   `yaml:"persist"`
+		Secure   bool   `yaml:"secure"`
+		LifeTime int    `yaml:"lifetime"`
+		SameSite string `yaml:"samesite"`
+		Path     string `yaml:"path"`
 	} `yaml:"cookie"`
 	Template struct {
 		Cached  bool     `yaml:"cached"`
