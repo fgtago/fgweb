@@ -7,15 +7,15 @@ import (
 )
 
 type Webservice struct {
-	RootDir         string
-	Configuration   *Configuration
-	Mux             *chi.Mux
-	TplMgr          *dwtpl.TemplateManager
-	AllowedAsset    map[string]*[]string
-	CurrentWsDir    string
-	ApplicationData any
-	ShowServerError bool
-	Session         *scs.SessionManager
+	RootDir          string
+	Configuration    *Configuration
+	Mux              *chi.Mux
+	TplMgr           *dwtpl.TemplateManager
+	AllowedAsset     map[string]*[]string
+	CurrentWsDir     string
+	ApplicationSetup any /* setup tambahan dari applikasi */
+	ShowServerError  bool
+	Session          *scs.SessionManager
 }
 
 var ws *Webservice
