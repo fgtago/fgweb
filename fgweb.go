@@ -71,7 +71,7 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	*/
 
 	session.Cookie.SameSite = http.SameSiteLaxMode
-	fmt.Println(session.Cookie.SameSite, ws.Configuration.Cookie.SameSite)
+	//fmt.Println(session.Cookie.SameSite, ws.Configuration.Cookie.SameSite)
 
 	ws.Session = session
 
