@@ -21,6 +21,7 @@ import (
 type RouteHandlerFunc func(mux *chi.Mux) error
 
 var ws *appsmodel.Webservice
+var cfgcontent *[]byte
 
 // New initializes a new instance of the Webservice struct.
 //
@@ -41,7 +42,8 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	ws.CurrentWsDir = filepath.Dir(filename)
 
 	// baca configurasi file
-	cfg, err := config.ReadFromYml(cfgpath)
+	cfgcontent = &[]byte{}
+	cfg, err := config.ReadFromYml(cfgpath, cfgcontent)
 	if err != nil {
 		dwlog.Error(err.Error())
 		return nil, fmt.Errorf("cannot read config file: %s", cfgpath)
@@ -58,19 +60,17 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	session.Cookie.Secure = ws.Configuration.Cookie.Secure
 	session.Cookie.Path = ws.Configuration.Cookie.Path
 
-	/*
-		if ws.Configuration.Cookie.SameSite == "lax" {
-			session.Cookie.SameSite = http.SameSiteLaxMode
-		} else if ws.Configuration.Cookie.SameSite == "strict" {
-			session.Cookie.SameSite = http.SameSiteStrictMode
-		} else if ws.Configuration.Cookie.SameSite == "none" {
-			session.Cookie.SameSite = http.SameSiteNoneMode
-		} else {
-			session.Cookie.SameSite = http.SameSiteDefaultMode
-		}
-	*/
+	if ws.Configuration.Cookie.SameSite == "lax" {
+		session.Cookie.SameSite = http.SameSiteLaxMode
+	} else if ws.Configuration.Cookie.SameSite == "strict" {
+		session.Cookie.SameSite = http.SameSiteStrictMode
+	} else if ws.Configuration.Cookie.SameSite == "none" {
+		session.Cookie.SameSite = http.SameSiteNoneMode
+	} else {
+		session.Cookie.SameSite = http.SameSiteDefaultMode
+	}
 
-	session.Cookie.SameSite = http.SameSiteLaxMode
+	//session.Cookie.SameSite = http.SameSiteLaxMode
 	//fmt.Println(session.Cookie.SameSite, ws.Configuration.Cookie.SameSite)
 
 	ws.Session = session
@@ -87,6 +87,10 @@ func New(rootDir string, cfgpath string) (*appsmodel.Webservice, error) {
 	appsmodel.NewWebservice(ws)
 
 	return ws, nil
+}
+
+func GetCfgContent() *[]byte {
+	return cfgcontent
 }
 
 func CreateServer(port int, hnd RouteHandlerFunc) *http.Server {

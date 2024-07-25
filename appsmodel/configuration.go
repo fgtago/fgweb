@@ -25,6 +25,7 @@ type Configuration struct {
 	Application struct {
 		PageDir    string `yaml:"pagedir"`
 		ContentDir string `yaml:"contentdir"`
+		Setup      any
 	} `yaml:"application"`
 	Logging struct {
 		Enabled bool `yaml:"enabled"`

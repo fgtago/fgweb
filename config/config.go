@@ -16,7 +16,7 @@ import (
 // Returns:
 // - *appsmodel.Configuration: a pointer to the configuration struct.
 // - error: an error if there was an issue reading or parsing the file.
-func ReadFromYml(path string) (cfg *appsmodel.Configuration, err error) {
+func ReadFromYml(path string, content *[]byte) (cfg *appsmodel.Configuration, err error) {
 	// info: membaca file config
 	var filedata []byte
 	filedata, err = os.ReadFile(path) // baca file dari path
@@ -25,6 +25,8 @@ func ReadFromYml(path string) (cfg *appsmodel.Configuration, err error) {
 		dwlog.Error(err.Error())
 		return nil, fmt.Errorf("cannot read file: %s", path)
 	}
+
+	*content = filedata
 
 	cfg = &appsmodel.Configuration{}
 	err = yaml.Unmarshal(filedata, cfg)
