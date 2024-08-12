@@ -160,7 +160,7 @@ func httpRequestHandler(hnd RouteHandlerFunc) *chi.Mux {
 	}
 
 	// internal middleware
-	//mux.Use(midware.Csrf)
+	// mux.Use(midware.Csrf)
 	mux.Use(midware.SessionLoader)
 	mux.Use(midware.MobileDetect)
 	mux.Use(midware.DefaultPageVariable)
