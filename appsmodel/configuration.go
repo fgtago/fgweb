@@ -9,6 +9,7 @@ type Configuration struct {
 		Server   string `yaml:"server"`
 		UserName string `yaml:"username"`
 		Password string `yaml:"password"`
+		Port     int    `yaml:"password"`
 	} `yaml:"database"`
 	Cookie struct {
 		Persist  bool   `yaml:"persist"`
